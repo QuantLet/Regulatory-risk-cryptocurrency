@@ -136,7 +136,7 @@ Datelist = datelist('20130401', '20190718')
 Datelist = pd.DataFrame(Datelist)
 Datelist.columns = ['Date']
 for i in range(len(Datelist)):
-    Datelist.ix[i,'Date'] = datetime.strptime(Datelist.ix[i,'Date'], '%Y-%m-%d').date()
+    Datelist.iloc[i,'Date'] = datetime.strptime(Datelist.iloc[i,'Date'], '%Y-%m-%d').date()
 
 df_agg = pd.concat([Datelist, pd.DataFrame(columns = ['News_num']),
                  pd.DataFrame(columns = ['News_len']),
@@ -395,7 +395,7 @@ def get_lemm(data):
 
     # Initialize spacy 'en' model, keeping only tagger component (for efficiency)
     # python3 -m spacy download en
-    nlp = spacy.load('en', disable=['parser', 'ner'])
+    nlp = spacy.load("en_core_web_sm")
     
     # Do lemmatization keeping only noun, adj, vb, adv
     data_lemmatized = lemmatization(data_words_nostops, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
@@ -457,7 +457,7 @@ print('\nCoherence Score: ', coherence_lda)
 
 # Hellinger distance
 H_distance=[]
-for i in range(1747, len(data_reg)):
+for i in range(1747, len(data_regulation)):
     temp_distance=[]
     for j in range(len(data_news)):
         lda_doc1=lda_model[corpus_news[j]]
@@ -623,7 +623,7 @@ topic1_words_time=topic_time(DTM_topic_0,time_stamps)
 topic1_words=list(topic1_words_time['words'])
 plt.figure()
 for i in range(0,5):
-    plt.plot(time_stamps, topic1_words_time.ix[i,1:],marker=".",label=topic1_words[i])
+    plt.plot(time_stamps, topic1_words_time.iloc[i,1:],marker=".",label=topic1_words[i])
 #plt.xlim((-1, 2))
 #plt.ylim((0, 0.02))
 plt.legend(loc='best')
